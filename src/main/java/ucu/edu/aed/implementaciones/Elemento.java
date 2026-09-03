@@ -10,15 +10,21 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
         private TDAElemento<T> hijoIzq;
         private TDAElemento<T> hijoDer;
 
-        public void setHijoIzquierdo(TDAElemento<T> hijoIzquierdo){
+        public Elemento(T datoElemento){
+            this.dato = datoElemento;
+            hijoDer = null;
+            hijoIzq = null;
+        }
 
+        public void setHijoIzquierdo(TDAElemento<T> hijoIzquierdo){
+            this.hijoIzq = hijoIzquierdo;
         }
     
         /**
          * Asigna el nodo derecho del nodo actual. Puede ser nulo.
          */
         public void setHijoDerecho(TDAElemento<T> hijoDerecho){
-
+            this.hijoDer = hijoDerecho;
         }
     
         /**
@@ -38,8 +44,8 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
         /**
          * Actualiza el dato del nodo actual.
          */
-        public void setDato(T dato){
-
+        public void setDato(T datoNuevo){
+            dato = datoNuevo;
         }
     
         /**
@@ -54,7 +60,25 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
          * Si no se encuentra, retorna nulo.
          */
         public TDAElemento<T> buscar(Comparable<T> criterioBusqueda){
-            return hijoIzq;
+            TDAElemento<T> resultado = null;
+            if (criterioBusqueda.compareTo(this.dato) == 0){
+                resultado = this;
+            }
+            else{
+                if (criterioBusqueda.compareTo(this.dato) < 0){
+                    // Si se cumple al condición el valor que buscamos es menor al actual.
+                    if (hijoIzq != null){
+                        resultado = hijoIzq.buscar(criterioBusqueda);
+                    }
+                }
+                else{
+                    // Si se llega hasta acá el valor que buscamos es mayor al actual.
+                    if (hijoDer != null){
+                        resultado = hijoDer.buscar(criterioBusqueda);
+                    }
+                }
+            }
+            return resultado;
         }
     
         /**
@@ -62,7 +86,49 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
          * Si se encuentra, se retorna el nodo borrado. En otro caso retornar null.
          */
         public TDAElemento<T> eliminar(Comparable<T> criterioBusqueda){
-            return hijoIzq;
+            if (criterioBusqueda.compareTo(dato) < 0){
+                //está del lado izquierdo
+                if (this.hijoIzq != null){
+                    this.hijoIzq = this.hijoIzq.eliminar(criterioBusqueda);
+                }
+                return this;
+            }
+            else{
+                if (criterioBusqueda.compareTo(dato) > 0){
+                    //está del lado derecho
+                    if (this.hijoDer != null){
+                        this.hijoDer = this.hijoDer.eliminar(criterioBusqueda);
+                    }
+                    return this;
+                }
+            }
+            return quitarNodo();
+        }
+
+        private TDAElemento<T> quitarNodo(){
+            if (this.hijoIzq == null){
+                return this.hijoDer;
+            }
+            else{
+                if (this.hijoDer == null){
+                    return this.hijoIzq;
+                }
+                else{
+                    //es un nodo completo
+                    TDAElemento<T> elHijo = this.hijoIzq;
+                    TDAElemento<T> elPadre = this;
+                    while (elHijo.getHijoDerecho() != null){
+                        elPadre = elHijo;
+                        elHijo = elHijo.getHijoDerecho();
+                    }
+                    if (elPadre != this){
+                        elPadre.setHijoDerecho(elHijo.getHijoIzquierdo());
+                        elHijo.setHijoIzquierdo(this.hijoIzq);  
+                    }
+                    elHijo.setHijoDerecho(hijoDer);
+                    return elHijo;
+                }
+            }
         }
     
         /**
@@ -70,7 +136,29 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
          * Si el nuevoDato existe, no se agrega
          */
         public boolean insertar(T nuevoDato){
-            return true;
+            if (nuevoDato.compareTo(this.dato) > 0){
+                // NuevoDatos es mayor que el elemento actual
+                if (hijoDer == null){
+                    hijoDer = new Elemento<>(nuevoDato);
+                    return true;
+                }
+                else{
+                    hijoDer.insertar(nuevoDato);
+                }
+            }
+            else{
+                if (nuevoDato.compareTo(this.dato) < 0){
+                    // nuevoDato es menor al elemento actual
+                    if (hijoIzq == null){
+                        hijoIzq = new Elemento<>(nuevoDato);
+                        return true;
+                    }
+                    else{
+                        hijoIzq.insertar(nuevoDato);
+                    }
+                }
+            }
+            return false;
         }
     
         /**
@@ -83,7 +171,13 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
          *}
          */
         public void inOrder(Consumer<TDAElemento<T>> consumidor){
-
+            if (this.hijoIzq != null){
+                this.hijoIzq.inOrder(consumidor);
+            }
+            consumidor.accept(this);
+            if (this.hijoDer != null){
+                this.hijoDer.inOrder(consumidor);
+            }
         }
     
         /**
@@ -96,7 +190,13 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
          *}
          */
         public void preOrder(Consumer<TDAElemento<T>> consumidor){
-
+            consumidor.accept(this);
+            if (hijoIzq != null){
+                this.hijoIzq.preOrder(consumidor);
+            }
+            if (hijoDer != null){
+                this.hijoDer.preOrder(consumidor);
+            }
         }
     
         /**
@@ -109,14 +209,24 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
          *}
          */
         public void postOrder(Consumer<TDAElemento<T>> consumidor){
-
+            if (hijoIzq != null){
+                this.hijoIzq.postOrder(consumidor);
+            }
+            if (hijoDer != null){
+                this.hijoDer.postOrder(consumidor);
+            }
+            consumidor.accept(this);
         }
     
         /**
          * retornar true si el nodo es hoja
          */
+        @Override
         public boolean esHoja(){
-            return true;
+            if (hijoDer == null && hijoIzq == null){
+                return true;
+            }
+            return false;
         }
     
         /**

@@ -1,7 +1,6 @@
 package ucu.edu.aed.tda;
 
 import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 /**
  * Modela un nodo del árbol binario.
@@ -55,7 +54,7 @@ public interface TDAElemento <T>{
      * Agrega un nuevo elemento al árbol
      * Si el nuevoDato existe, no se agrega
      */
-    boolean insertar(Comparable<T> nuevoDato);
+    boolean insertar(T nuevoDato);
 
     /**
      * {@snippet :
