@@ -143,7 +143,7 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
                 return true;
             }
             else{
-                 hijoDer.insertar(nuevoDato);
+                return hijoDer.insertar(nuevoDato);
             }
         }
         else{
@@ -154,7 +154,7 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
                     return true;
                 }
                 else{
-                    hijoIzq.insertar(nuevoDato);
+                    return hijoIzq.insertar(nuevoDato);
                 }
             }
         }
