@@ -113,7 +113,7 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
     if (raiz == null){
         return;
     }
-    raiz.inOrder(nodo -> consumidor.accept(nodo.getDato()));
+    raiz.preOrder(nodo -> consumidor.accept(nodo.getDato()));
     }
 
     /**
@@ -130,7 +130,7 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
     if (raiz == null){
         return;
     }
-    raiz.inOrder(nodo -> consumidor.accept(nodo.getDato()));
+    raiz.postOrder(nodo -> consumidor.accept(nodo.getDato()));
     }
 
     /**
