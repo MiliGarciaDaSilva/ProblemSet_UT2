@@ -51,7 +51,7 @@ public interface TDAArbolBinario<T> {
      * @return {@code true} si el elemento fue agregado correctamente;
      * {@code false} si el elemento ya existía y no fue agregado
      */
-    boolean insertar(Comparable<T> dato);
+    boolean insertar(T dato);
 
     /**
      * Recorre el árbol en in-order

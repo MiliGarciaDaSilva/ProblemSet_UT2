@@ -19,7 +19,18 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
      * si no existe ninguno
      */
     public T buscar(Comparable<T> predicate){
-        return raiz.getDato();
+        if (raiz == null){
+            return null;
+        }
+        else {
+        TDAElemento<T> resultado = raiz.buscar(predicate);
+        if (resultado == null){
+            return null;
+        }
+        else{
+            return resultado.getDato();
+        }
+        }
     }
 
     /**
@@ -39,7 +50,17 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
      * {@code false} en caso contrario
      */
     public boolean eliminar(Comparable<T> criterioBusqueda){
-        return true;
+        if (raiz == null){
+            return false;
+        }
+        if (raiz.buscar(criterioBusqueda) == null)
+        {
+            return false;
+        }
+        else {
+            raiz = raiz.eliminar(criterioBusqueda);
+            return true;
+        }
     }
 
     /**
@@ -51,9 +72,15 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
      * @return {@code true} si el elemento fue agregado correctamente;
      * {@code false} si el elemento ya existía y no fue agregado
      */
-    public boolean insertar( T dato){
-        return true;
-    }
+    public boolean insertar(T dato){
+        if (raiz == null){
+            raiz = new Elemento<>(dato);
+            return true;
+        }
+        else{
+            return raiz.insertar(dato);
+        }
+        }
 
     /**
      * Recorre el árbol en in-order
@@ -66,7 +93,10 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
      *}
      */
     public void inOrder(Consumer<T> consumidor){
-
+    if (raiz == null){
+        return;
+    }
+    raiz.inOrder(nodo -> consumidor.accept(nodo.getDato()));
     }
 
     /**
@@ -80,7 +110,10 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
      *}
      */
     public void preOrder(Consumer<T> consumidor){
-
+    if (raiz == null){
+        return;
+    }
+    raiz.inOrder(nodo -> consumidor.accept(nodo.getDato()));
     }
 
     /**
@@ -94,7 +127,10 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
      *}
      */
     public void postOrder(Consumer<T> consumidor){
-
+    if (raiz == null){
+        return;
+    }
+    raiz.inOrder(nodo -> consumidor.accept(nodo.getDato()));
     }
 
     /**
