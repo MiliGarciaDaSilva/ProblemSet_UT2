@@ -101,28 +101,38 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
      * Devuelve true si el árbol es vacío
      */
     public boolean esVacio(){
-        return true;
+        return raiz == null;
     }
 
     /**
      * Devuelve la cantidad de nodos del árbol
      **/
     public int cantidadNodos(){
+    if (raiz == null){
         return 0;
+    }
+    return raiz.cantidadNodos();
     }
 
     /**
      * Devuelve la cantidad de nodos que son hojas
      */
     public int cantidadHojas(){
+    if (raiz == null){
         return 0;
     }
+    return raiz.cantidadHojas();
+    }
+    
 
     /**
      * Devuelve la cantidad de nodos que NO son hojas
      */
     public int cantidadNodosInternos(){
+    if (raiz == null){
         return 0;
+    }
+    return raiz.cantidadNodosInternos();
     }
     
 }
