@@ -89,6 +89,8 @@ public interface TDAArbolBinario<T> {
      */
     void postOrder(Consumer<T> consumidor);
 
+    String preOrderString();
+
     String postOrderString();
 
     String inOrderString();

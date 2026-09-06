@@ -13,3 +13,7 @@ target/
 # Sistema operativo
 Thumbs.db
 .DS_Store
+
+# Salida generada por los Main de ejercicios
+resultadoInserciones.txt
+resultadoConsultas.txt

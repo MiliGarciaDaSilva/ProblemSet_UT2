@@ -10,22 +10,47 @@ import ucu.edu.aed.implementaciones.ArbolBinario;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         ArbolBinario<Integer> arbol = new ArbolBinario<>();
-        int[] claves = {12, 25, 14, 1, 33, 88, 45, 2, 7, 66, 5, 99};
-        for (int clave : claves) {
-            arbol.insertar(clave);
-        }
 
-        try (BufferedReader lector = new BufferedReader(new FileReader("consultasPrueba.txt"));
-             BufferedWriter escritor = new BufferedWriter(new FileWriter("resultadoConsultas.txt"))) {
+        try (BufferedReader lectorClaves = new BufferedReader(new FileReader("src/main/java/ucu/edu/aed/ejercicio2/clavesPrueba.txt"));
+             BufferedWriter escritorInserciones = new BufferedWriter(new FileWriter("src/main/java/ucu/edu/aed/ejercicio2/resultadoInserciones.txt"))) {
             String linea;
-            while ((linea = lector.readLine()) != null) {
-                int clave = Integer.parseInt(linea.trim());
-                int nivel = arbol.esVacio() ? -1 : arbol.obtenerRaiz().obtenerNivel(clave);
-                escritor.write(clave + "," + nivel);
-                escritor.newLine();
+            while ((linea = lectorClaves.readLine()) != null) {
+                String claveTexto = linea.trim();
+                if (claveTexto.isEmpty()) {
+                    continue;
+                }
+                int clave = Integer.parseInt(claveTexto);
+                arbol.insertar(clave);
+                escritorInserciones.write(clave + " " + arbol.getContador());
+                escritorInserciones.newLine();
             }
+
+            try (BufferedReader lectorConsultas = new BufferedReader(new FileReader("src/main/java/ucu/edu/aed/ejercicio2/consultasPrueba.txt"));
+                 BufferedWriter escritorConsultas = new BufferedWriter(new FileWriter("src/main/java/ucu/edu/aed/ejercicio2/resultadoConsultas.txt"))) {
+                String lineaConsulta;
+                while ((lineaConsulta = lectorConsultas.readLine()) != null) {
+                    String claveTexto = lineaConsulta.trim();
+                    if (claveTexto.isEmpty()) {
+                        continue;
+                    }
+                    int clave = Integer.parseInt(claveTexto);
+                    int nivel;
+                    if (arbol.esVacio()) {
+                        nivel = -1;
+                    } else {
+                        nivel = arbol.obtenerRaiz().obtenerNivel(clave);
+                    }
+                    escritorConsultas.write(clave + "," + nivel);
+                    escritorConsultas.newLine();
+                }
+            }
+
+            System.out.println("Listo. Salida escrita en resultadoInserciones.txt y resultadoConsultas.txt");
+
+        } catch (IOException e) {
+            System.out.println("Error leyendo o escribiendo archivos: " + e.getMessage());
         }
     }
 }
