@@ -8,6 +8,15 @@ import ucu.edu.aed.tda.TDAElemento;
 public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T> {
 
     private TDAElemento<T> raiz;
+    private int contador;
+
+    /**
+     * Devuelve la cantidad de invocaciones que costó la última inserción,
+     * o 0 si esa inserción no se realizó por tratarse de una clave repetida.
+     */
+    public int getContador(){
+        return contador;
+    }
 
     /**
      * Busca y retorna el primer elemento que cumple con el predicado dado.
@@ -75,12 +84,14 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
     public boolean insertar(T dato){
         if (raiz == null){
             raiz = new Elemento<>(dato);
-            return true;
+            contador = 1;
         }
         else{
-            return raiz.insertar(dato);
+            contador = raiz.insertarContando(dato);
         }
-        }
+        System.out.println("contador = " + contador);
+        return contador > 0;
+    }
 
     /**
      * Recorre el árbol en in-order
@@ -115,6 +126,15 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
     }
     raiz.preOrder(nodo -> consumidor.accept(nodo.getDato()));
     }
+
+    public String preOrderString(){
+        StringBuilder resultado = new StringBuilder();
+        preOrder(dato -> resultado.append(dato).append(","));
+        if (resultado.length() > 0){
+            resultado.setLength(resultado.length() - 1);
+        }
+        return resultado.toString();
+    } 
 
     /**
      * Recorre el árbol en post-order

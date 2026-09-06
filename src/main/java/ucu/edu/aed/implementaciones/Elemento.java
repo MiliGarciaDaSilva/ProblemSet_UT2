@@ -162,6 +162,45 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
     }
     
     /**
+    * Inserta un nuevo dato contando las invocaciones recursivas.
+    * Retorna la cantidad de invocaciones si se insertó, o 0 si el dato ya existía.
+    */
+    public int insertarContando(T nuevoDato){
+    int dato = nuevoDato.compareTo(this.dato);
+
+    // el dato ya está, no se inserta
+    if (dato == 0){
+        return 0;
+    }
+
+    if (dato > 0){
+        // nuevoDato es mayor, va del lado derecho
+        if (hijoDer == null){
+            hijoDer = new Elemento<>(nuevoDato);
+            return 1;
+        }
+        int contadorHijo = hijoDer.insertarContando(nuevoDato);
+        if (contadorHijo == 0){
+            return 0;
+        }
+        return 1 + contadorHijo;
+    }
+    else{
+        // nuevoDato es menor, va del lado izquierdo
+        if (hijoIzq == null){
+            hijoIzq = new Elemento<>(nuevoDato);
+            return 1;
+        }
+        int contadorHijo = hijoIzq.insertarContando(nuevoDato);
+        if (contadorHijo == 0){
+            return 0;
+        }
+        return 1 + contadorHijo;
+        }
+    }
+
+
+    /**
      * {@snippet :
      * // ejemplo de uso
      * elemento.inOrder(dato ->{
