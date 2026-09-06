@@ -153,6 +153,24 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
     raiz.postOrder(nodo -> consumidor.accept(nodo.getDato()));
     }
 
+    public String postOrderString(){
+        StringBuilder resultado = new StringBuilder();
+        postOrder(dato -> resultado.append(dato).append(","));
+        if (resultado.length() > 0){
+            resultado.setLength(resultado.length() - 1);
+        }
+        return resultado.toString();
+    }
+
+    public String inOrderString(){
+        StringBuilder resultado = new StringBuilder();
+        inOrder(dato -> resultado.append(dato).append(","));
+        if (resultado.length() > 0){
+            resultado.setLength(resultado.length() - 1);
+        }
+        return resultado.toString();
+    }
+
     /**
      * Devuelve true si el árbol es vacío
      */
