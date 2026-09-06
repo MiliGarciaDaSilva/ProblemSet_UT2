@@ -95,6 +95,8 @@ public interface TDAArbolBinario<T> {
 
     String inOrderString();
 
+    int altura();
+
     /**
      * Devuelve true si el árbol es vacío
      */
