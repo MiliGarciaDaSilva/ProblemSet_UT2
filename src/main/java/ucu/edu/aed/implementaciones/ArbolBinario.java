@@ -18,6 +18,13 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
         return contador;
     }
 
+    public int altura(){
+    if (raiz == null){
+        return 0;
+    }
+    return raiz.altura();
+    }   
+
     /**
      * Busca y retorna el primer elemento que cumple con el predicado dado.
      *
