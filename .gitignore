@@ -1,0 +1,15 @@
+# Compilados y salida de build de Maven
+target/
+*.class
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+
+# Sistema operativo
+Thumbs.db
+.DS_Store
