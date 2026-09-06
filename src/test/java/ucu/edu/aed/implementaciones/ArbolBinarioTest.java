@@ -184,4 +184,19 @@ public class ArbolBinarioTest extends TestCase {
         ArbolBinario<Integer> vacio = new ArbolBinario<>();
         assertEquals(-1, vacio.obtenerNivel(5));
     }
+
+    public void testAltura(){
+        assertEquals(4, arbol.altura());
+    }
+
+    public void testAlturaConUnSoloNodo(){
+        ArbolBinario<Integer> unSoloNodo = new ArbolBinario<>();
+        unSoloNodo.insertar(1);
+        assertEquals(1, unSoloNodo.altura());
+    }
+
+    public void testAlturaEnArbolVacio(){
+        ArbolBinario<Integer> vacio = new ArbolBinario<>();
+        assertEquals(0, vacio.altura());
+    }
 }
