@@ -89,6 +89,10 @@ public interface TDAArbolBinario<T> {
      */
     void postOrder(Consumer<T> consumidor);
 
+    String postOrderString();
+
+    String inOrderString();
+
     /**
      * Devuelve true si el árbol es vacío
      */
