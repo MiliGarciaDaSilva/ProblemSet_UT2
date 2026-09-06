@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: ucu.edu.aed.implementaciones.ArbolBinarioTest
 -------------------------------------------------------------------------------
-Tests run: 25, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.025 s -- in ucu.edu.aed.implementaciones.ArbolBinarioTest
+Tests run: 25, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.041 s -- in ucu.edu.aed.implementaciones.ArbolBinarioTest
