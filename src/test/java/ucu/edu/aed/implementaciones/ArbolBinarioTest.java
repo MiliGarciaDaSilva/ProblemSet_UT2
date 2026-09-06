@@ -154,4 +154,34 @@ public class ArbolBinarioTest extends TestCase {
         ArbolBinario<Integer> vacio = new ArbolBinario<>();
         assertEquals("", vacio.postOrderString());
     }
+
+    public void testObtenerNivelRaiz(){
+        assertEquals(0, arbol.obtenerNivel(8));
+    }
+
+    public void testObtenerNivelHijosDirectos(){
+        assertEquals(1, arbol.obtenerNivel(3));
+        assertEquals(1, arbol.obtenerNivel(10));
+    }
+
+    public void testObtenerNivelNietos(){
+        assertEquals(2, arbol.obtenerNivel(1));
+        assertEquals(2, arbol.obtenerNivel(6));
+        assertEquals(2, arbol.obtenerNivel(14));
+    }
+
+    public void testObtenerNivelBisnietos(){
+        assertEquals(3, arbol.obtenerNivel(4));
+        assertEquals(3, arbol.obtenerNivel(7));
+        assertEquals(3, arbol.obtenerNivel(13));
+    }
+
+    public void testObtenerNivelClaveInexistente(){
+        assertEquals(-1, arbol.obtenerNivel(99));
+    }
+
+    public void testObtenerNivelEnArbolVacio(){
+        ArbolBinario<Integer> vacio = new ArbolBinario<>();
+        assertEquals(-1, vacio.obtenerNivel(5));
+    }
 }

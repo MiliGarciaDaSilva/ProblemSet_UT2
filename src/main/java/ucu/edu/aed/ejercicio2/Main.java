@@ -36,12 +36,7 @@ public class Main {
                         continue;
                     }
                     int clave = Integer.parseInt(claveTexto);
-                    int nivel;
-                    if (arbol.esVacio()) {
-                        nivel = -1;
-                    } else {
-                        nivel = arbol.obtenerRaiz().obtenerNivel(clave);
-                    }
+                    int nivel = arbol.obtenerNivel(clave);
                     escritorConsultas.write(clave + "," + nivel);
                     escritorConsultas.newLine();
                 }

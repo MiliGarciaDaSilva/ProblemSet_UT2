@@ -208,5 +208,12 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
     }
     return raiz.cantidadNodosInternos();
     }
-    
+
+    public int obtenerNivel(Comparable<T> criterioBusqueda){
+        if (raiz == null){
+            return -1;
+        }
+        return raiz.obtenerNivel(criterioBusqueda);
+    }
+
 }

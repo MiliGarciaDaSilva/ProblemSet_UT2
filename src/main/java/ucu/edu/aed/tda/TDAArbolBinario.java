@@ -114,4 +114,6 @@ public interface TDAArbolBinario<T> {
      * Devuelve la cantidad de nodos que NO son hojas
      */
     int cantidadNodosInternos();
+
+    int obtenerNivel(Comparable<T> criterioBusqueda);
 }
