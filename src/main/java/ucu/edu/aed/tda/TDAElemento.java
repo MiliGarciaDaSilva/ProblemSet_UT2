@@ -121,4 +121,8 @@ public interface TDAElemento <T>{
     int obtenerNivel(Comparable<T> criterioBusqueda);
 
     int insertarContando(T nuevoDato);
+
+    TDALista<T> completos();
+
+    TDALista<T> enNivel(int nivel);
 }

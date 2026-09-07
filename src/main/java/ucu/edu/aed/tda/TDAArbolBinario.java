@@ -118,4 +118,8 @@ public interface TDAArbolBinario<T> {
     int cantidadNodosInternos();
 
     int obtenerNivel(Comparable<T> criterioBusqueda);
+
+    TDALista<T> completos();
+
+    TDALista<T> enNivel(int nivel);
 }

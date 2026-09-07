@@ -4,6 +4,7 @@ import java.util.function.Consumer;
 
 import ucu.edu.aed.tda.TDAArbolBinario;
 import ucu.edu.aed.tda.TDAElemento;
+import ucu.edu.aed.tda.TDALista;
 
 public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T> {
 
@@ -221,6 +222,20 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
             return -1;
         }
         return raiz.obtenerNivel(criterioBusqueda);
+    }
+
+    public TDALista<T> completos(){
+        if (raiz == null){
+            return new ListaEnlazada<>();
+        }
+        return raiz.completos();
+    }
+
+    public TDALista<T> enNivel(int nivel){
+        if (raiz == null){
+            return new ListaEnlazada<>();
+        }
+        return raiz.enNivel(nivel);
     }
 
 }
