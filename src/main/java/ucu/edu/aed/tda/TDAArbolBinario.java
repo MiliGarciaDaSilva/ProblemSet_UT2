@@ -118,4 +118,9 @@ public interface TDAArbolBinario<T> {
     int cantidadNodosInternos();
 
     int obtenerNivel(Comparable<T> criterioBusqueda);
+
+    /*
+     Devuelve la menor clave del árbol, o null si el árbol está vacío
+     */
+    T claveMenor();
 }

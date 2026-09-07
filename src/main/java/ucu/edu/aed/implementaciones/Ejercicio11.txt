@@ -1,0 +1,50 @@
+1. Obtener menor clave del árbol
+
+  - Lenguaje natural -
+  Para obtener la menor clave del árbol partimos de la raíz, y descendemos recursivamente por el hijo izquierdo de cada nodo visitado hasta encontrar uno cuyo nodo hijo izquierdo sea nulo. La clave de ese nodo es la menor del árbol porque en un árbol binario de búsqueda todo nodo es mayor que los de su subárbol izquierdo.
+
+  - Precondiciones -
+    - el árbol no debe ser vacío
+
+  - Postcondiciones -
+    - la clave devuelta pertenece a algún nodo del árbol
+    - esa clave es menor o igual que el resto de las claves del árbol
+    - el algoritmo no modifica la estructura del árbol
+  
+  - Casos de prueba -
+    - árbol con un solo nodo: (5) --> clave menor = 5
+    - raíz sin hijo izquierdo en ningún nivel: (5)
+                                                 \
+                                                 (7)   ---> clave menor = 5
+                                                /   \
+                                              (6)   (8)
+  - Caso general (hijos izquierdos en varios niveles):
+              (50)
+             /    \
+           (20)   (70)
+          /    \
+        (10)   (30)
+    ---> clave menor = 10
+
+  - El nodo con la clave menor tiene hijo derecho (no es hoja):
+              (10)
+             /    \
+           (5)    (15)
+             \
+             (7)
+    ---> clave menor = 5 (nodo con hijo derecho = 7)  
+
+  - Pseudocódigo -
+  claveMenor(raiz: TDANodoAB): tipo_clave
+  Comienzo
+      elementoActual <- raiz                          
+      Mientras elementoActual.hijoIzq != null         
+          elementoActual <- elementoActual.hijoIzq
+      FinMientras
+      Devolver elementoActual.dato
+  Fin
+
+  - Complejidad -
+  O(n), el algoritmo hace una comparación por cada nivel que desciende, por que la complejidad es de orden de la altura del árbol: O(h), en el peor caso (árbol degenerado), la altura es igual a la cantidad de nodos, por lo que la complejidad sería O(n). En el mejor caso (árbol balanceado), la altura sería log2(n), por lo que sería O(log n).
+
+2. Obtener mayor clave del árbol

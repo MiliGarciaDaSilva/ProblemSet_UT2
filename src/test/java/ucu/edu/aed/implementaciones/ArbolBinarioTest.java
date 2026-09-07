@@ -199,4 +199,19 @@ public class ArbolBinarioTest extends TestCase {
         ArbolBinario<Integer> vacio = new ArbolBinario<>();
         assertEquals(0, vacio.altura());
     }
+
+    public void testClaveMenorConUnSoloNodo(){
+        ArbolBinario<Integer> unSoloNodo = new ArbolBinario<>();
+        unSoloNodo.insertar(5);
+        assertEquals(Integer.valueOf(5), unSoloNodo.claveMenor());
+    }
+
+    public void testClaveMenorArbolDesbalanceadoADerecha(){
+        ArbolBinario<Integer> a = new ArbolBinario<>();
+        a.insertar(5);
+        a.insertar(7);
+        a.insertar(6);
+        a.insertar(8);
+        assertEquals(Integer.valueOf(5), a.claveMenor());
+    }
 }

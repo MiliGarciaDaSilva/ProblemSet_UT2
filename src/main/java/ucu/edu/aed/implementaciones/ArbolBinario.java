@@ -222,5 +222,11 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
         }
         return raiz.obtenerNivel(criterioBusqueda);
     }
-
+    
+    public T claveMenor(){
+    if (raiz == null){
+        return null;
+    }
+    return raiz.claveMenor();
+    }
 }

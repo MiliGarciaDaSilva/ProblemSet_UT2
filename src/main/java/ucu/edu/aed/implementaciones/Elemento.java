@@ -377,4 +377,14 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
         return -1;
     }
     
+    /*
+    Devuelve la menor clave del subárbol que tiene como raíz este nodo
+    */
+    public T claveMenor(){
+        TDAElemento<T> elementoActual = this;
+        while (elementoActual.getHijoIzquierdo() != null){
+            elementoActual = elementoActual.getHijoIzquierdo();
+        }
+        return elementoActual.getDato();
+    }
 }

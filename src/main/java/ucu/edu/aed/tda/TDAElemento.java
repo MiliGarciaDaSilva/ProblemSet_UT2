@@ -121,4 +121,9 @@ public interface TDAElemento <T>{
     int obtenerNivel(Comparable<T> criterioBusqueda);
 
     int insertarContando(T nuevoDato);
+
+    /*
+     Devuelve la menor clave del subárbol que tiene como raíz este nodo.
+    */
+    T claveMenor();
 }
