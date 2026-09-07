@@ -233,4 +233,59 @@ public class ArbolBinarioTest extends TestCase {
         arbolChico.eliminar(3);
         assertEquals(1, arbolChico.altura());
     }
+
+    public void testAlturaArbolCompleto(){
+        ArbolBinario<Integer> completo = new ArbolBinario<>();
+        int[] claves = {4, 2, 6, 1, 3, 5, 7};
+        for (int clave : claves) {
+            completo.insertar(clave);
+        }
+        assertEquals(3, completo.altura());
+    }
+
+    public void testAlturaRamaMasLargaIzquierda(){
+        ArbolBinario<Integer> ramaLargaIzq = new ArbolBinario<>();
+        int[] claves = {10, 5, 20, 3, 1};
+        for (int clave : claves) {
+            ramaLargaIzq.insertar(clave);
+        }
+        // el subárbol izquierdo tiene altura 3 y el derecho 1
+        assertEquals(4, ramaLargaIzq.altura());
+    }
+
+    public void testAlturaRamaMasLargaDerecha(){
+        ArbolBinario<Integer> ramaLargaDer = new ArbolBinario<>();
+        int[] claves = {10, 5, 20, 25, 30};
+        for (int clave : claves) {
+            ramaLargaDer.insertar(clave);
+        }
+        // caso espejo del anterior: el subárbol derecho es el más alto
+        assertEquals(4, ramaLargaDer.altura());
+    }
+
+    public void testAlturaNoModificaElArbol(){
+        String inordenAntes = arbol.inOrderString();
+        int primera = arbol.altura();
+        int segunda = arbol.altura();
+        assertEquals(primera, segunda);
+        assertEquals(inordenAntes, arbol.inOrderString());
+        assertEquals(9, arbol.cantidadNodos());
+    }
+
+    public void testAlturaLuegoDeEliminarNivelMasProfundo(){
+        // 4, 7 y 13 son las tres hojas del cuarto nivel
+        arbol.eliminar(4);
+        arbol.eliminar(7);
+        arbol.eliminar(13);
+        assertEquals(3, arbol.altura());
+    }
+
+    public void testAlturaLuegoDeVaciarElArbol(){
+        int[] claves = {8, 3, 10, 1, 6, 14, 4, 7, 13};
+        for (int clave : claves) {
+            arbol.eliminar(clave);
+        }
+        assertTrue(arbol.esVacio());
+        assertEquals(0, arbol.altura());
+    }
 }
