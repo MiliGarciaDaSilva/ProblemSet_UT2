@@ -199,4 +199,38 @@ public class ArbolBinarioTest extends TestCase {
         ArbolBinario<Integer> vacio = new ArbolBinario<>();
         assertEquals(0, vacio.altura());
     }
+
+    public void testAlturaRamaDegeneradaIzquierda(){
+        ArbolBinario<Integer> ramaIzquierda = new ArbolBinario<>();
+        int[] claves = {10, 8, 6, 4, 2};
+        for (int clave : claves) {
+            ramaIzquierda.insertar(clave);
+        }
+        assertEquals(5, ramaIzquierda.altura());
+    }
+
+    public void testAlturaRamaDegeneradaDerecha(){
+        ArbolBinario<Integer> ramaDerecha = new ArbolBinario<>();
+        int[] claves = {2, 4, 6, 8, 10};
+        for (int clave : claves) {
+            ramaDerecha.insertar(clave);
+        }
+        assertEquals(5, ramaDerecha.altura());
+    }
+
+    public void testAlturaConDuplicadoNoCambia(){
+        ArbolBinario<Integer> arbolDuplicado = new ArbolBinario<>();
+        arbolDuplicado.insertar(5);
+        arbolDuplicado.insertar(5);
+        assertEquals(1, arbolDuplicado.altura());
+    }
+
+    public void testAlturaLuegoDeEliminar(){
+        ArbolBinario<Integer> arbolChico = new ArbolBinario<>();
+        arbolChico.insertar(8);
+        arbolChico.insertar(3);
+        assertEquals(2, arbolChico.altura());
+        arbolChico.eliminar(3);
+        assertEquals(1, arbolChico.altura());
+    }
 }
