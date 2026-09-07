@@ -126,4 +126,7 @@ public interface TDAElemento <T>{
      Devuelve la menor clave del subárbol que tiene como raíz este nodo.
     */
     T claveMenor();
+    TDALista<T> completos();
+
+    TDALista<T> enNivel(int nivel);
 }

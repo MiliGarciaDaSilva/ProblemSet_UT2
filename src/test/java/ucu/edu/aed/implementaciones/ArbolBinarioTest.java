@@ -6,6 +6,8 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
+import ucu.edu.aed.tda.TDALista;
+
 public class ArbolBinarioTest extends TestCase {
 
     private ArbolBinario<Integer> arbol;
@@ -111,6 +113,31 @@ public class ArbolBinarioTest extends TestCase {
         assertEquals(4, arbol.cantidadHojas());
     }
 
+    public void testCantidadHojasEnArbolVacio(){
+        ArbolBinario<Integer> vacio = new ArbolBinario<>();
+        assertEquals(0, vacio.cantidadHojas());
+    }
+
+    public void testCantidadHojasConUnSoloNodo(){
+        ArbolBinario<Integer> unSoloNodo = new ArbolBinario<>();
+        unSoloNodo.insertar(1);
+        assertEquals(1, unSoloNodo.cantidadHojas());
+    }
+
+    public void testCantidadHojasRamaDegenerada(){
+        ArbolBinario<Integer> ramaIzquierda = new ArbolBinario<>();
+        int[] claves = {10, 8, 6, 4, 2};
+        for (int clave : claves) {
+            ramaIzquierda.insertar(clave);
+        }
+        assertEquals(1, ramaIzquierda.cantidadHojas());
+    }
+
+    public void testCantidadHojasLuegoDeEliminar(){
+        assertTrue(arbol.eliminar(4));
+        assertEquals(3, arbol.cantidadHojas());
+    }
+
     public void testCantidadNodosInternos(){
         assertEquals(5, arbol.cantidadNodosInternos());
     }
@@ -213,5 +240,154 @@ public class ArbolBinarioTest extends TestCase {
         a.insertar(6);
         a.insertar(8);
         assertEquals(Integer.valueOf(5), a.claveMenor());
+    }
+    
+    public void testAlturaRamaDegeneradaIzquierda(){
+        ArbolBinario<Integer> ramaIzquierda = new ArbolBinario<>();
+        int[] claves = {10, 8, 6, 4, 2};
+        for (int clave : claves) {
+            ramaIzquierda.insertar(clave);
+        }
+        assertEquals(5, ramaIzquierda.altura());
+    }
+
+    public void testAlturaRamaDegeneradaDerecha(){
+        ArbolBinario<Integer> ramaDerecha = new ArbolBinario<>();
+        int[] claves = {2, 4, 6, 8, 10};
+        for (int clave : claves) {
+            ramaDerecha.insertar(clave);
+        }
+        assertEquals(5, ramaDerecha.altura());
+    }
+
+    public void testAlturaConDuplicadoNoCambia(){
+        ArbolBinario<Integer> arbolDuplicado = new ArbolBinario<>();
+        arbolDuplicado.insertar(5);
+        arbolDuplicado.insertar(5);
+        assertEquals(1, arbolDuplicado.altura());
+    }
+
+    public void testAlturaLuegoDeEliminar(){
+        ArbolBinario<Integer> arbolChico = new ArbolBinario<>();
+        arbolChico.insertar(8);
+        arbolChico.insertar(3);
+        assertEquals(2, arbolChico.altura());
+        arbolChico.eliminar(3);
+        assertEquals(1, arbolChico.altura());
+    }
+
+    public void testAlturaArbolCompleto(){
+        ArbolBinario<Integer> completo = new ArbolBinario<>();
+        int[] claves = {4, 2, 6, 1, 3, 5, 7};
+        for (int clave : claves) {
+            completo.insertar(clave);
+        }
+        assertEquals(3, completo.altura());
+    }
+
+    public void testAlturaRamaMasLargaIzquierda(){
+        ArbolBinario<Integer> ramaLargaIzq = new ArbolBinario<>();
+        int[] claves = {10, 5, 20, 3, 1};
+        for (int clave : claves) {
+            ramaLargaIzq.insertar(clave);
+        }
+        // el subárbol izquierdo tiene altura 3 y el derecho 1
+        assertEquals(4, ramaLargaIzq.altura());
+    }
+
+    public void testAlturaRamaMasLargaDerecha(){
+        ArbolBinario<Integer> ramaLargaDer = new ArbolBinario<>();
+        int[] claves = {10, 5, 20, 25, 30};
+        for (int clave : claves) {
+            ramaLargaDer.insertar(clave);
+        }
+        // caso espejo del anterior: el subárbol derecho es el más alto
+        assertEquals(4, ramaLargaDer.altura());
+    }
+
+    public void testAlturaNoModificaElArbol(){
+        String inordenAntes = arbol.inOrderString();
+        int primera = arbol.altura();
+        int segunda = arbol.altura();
+        assertEquals(primera, segunda);
+        assertEquals(inordenAntes, arbol.inOrderString());
+        assertEquals(9, arbol.cantidadNodos());
+    }
+
+    public void testAlturaLuegoDeEliminarNivelMasProfundo(){
+        // 4, 7 y 13 son las tres hojas del cuarto nivel
+        arbol.eliminar(4);
+        arbol.eliminar(7);
+        arbol.eliminar(13);
+        assertEquals(3, arbol.altura());
+    }
+
+    public void testAlturaLuegoDeVaciarElArbol(){
+        int[] claves = {8, 3, 10, 1, 6, 14, 4, 7, 13};
+        for (int clave : claves) {
+            arbol.eliminar(clave);
+        }
+        assertTrue(arbol.esVacio());
+        assertEquals(0, arbol.altura());
+    }
+
+    public void testCompletos(){
+        TDALista<Integer> completos = arbol.completos();
+        assertEquals(3, completos.tamaño());
+        assertTrue(completos.contiene(8));
+        assertTrue(completos.contiene(3));
+        assertTrue(completos.contiene(6));
+    }
+
+    public void testCompletosEnArbolVacio(){
+        ArbolBinario<Integer> vacio = new ArbolBinario<>();
+        assertEquals(0, vacio.completos().tamaño());
+    }
+
+    public void testCompletosSinNodosCompletos(){
+        ArbolBinario<Integer> ramaIzquierda = new ArbolBinario<>();
+        int[] claves = {10, 8, 6, 4, 2};
+        for (int clave : claves) {
+            ramaIzquierda.insertar(clave);
+        }
+        assertEquals(0, ramaIzquierda.completos().tamaño());
+    }
+
+    public void testEnNivelRaiz(){
+        TDALista<Integer> nivel0 = arbol.enNivel(0);
+        assertEquals(1, nivel0.tamaño());
+        assertEquals(Integer.valueOf(8), nivel0.obtener(0));
+    }
+
+    public void testEnNivelUno(){
+        TDALista<Integer> nivel1 = arbol.enNivel(1);
+        assertEquals(2, nivel1.tamaño());
+        assertTrue(nivel1.contiene(3));
+        assertTrue(nivel1.contiene(10));
+    }
+
+    public void testEnNivelDos(){
+        TDALista<Integer> nivel2 = arbol.enNivel(2);
+        assertEquals(3, nivel2.tamaño());
+        assertTrue(nivel2.contiene(1));
+        assertTrue(nivel2.contiene(6));
+        assertTrue(nivel2.contiene(14));
+    }
+
+    public void testEnNivelTres(){
+        TDALista<Integer> nivel3 = arbol.enNivel(3);
+        assertEquals(3, nivel3.tamaño());
+        assertTrue(nivel3.contiene(4));
+        assertTrue(nivel3.contiene(7));
+        assertTrue(nivel3.contiene(13));
+    }
+
+    public void testEnNivelInexistente(){
+        assertEquals(0, arbol.enNivel(4).tamaño());
+    }
+
+    public void testEnNivelEnArbolVacio(){
+        ArbolBinario<Integer> vacio = new ArbolBinario<>();
+        assertEquals(0, vacio.enNivel(0).tamaño());
     }
 }

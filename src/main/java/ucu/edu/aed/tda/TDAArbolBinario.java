@@ -123,4 +123,7 @@ public interface TDAArbolBinario<T> {
      Devuelve la menor clave del árbol, o null si el árbol está vacío
      */
     T claveMenor();
+    TDALista<T> completos();
+
+    TDALista<T> enNivel(int nivel);
 }

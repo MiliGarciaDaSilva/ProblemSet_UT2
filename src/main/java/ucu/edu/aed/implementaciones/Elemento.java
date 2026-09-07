@@ -3,6 +3,7 @@ package ucu.edu.aed.implementaciones;
 import java.util.function.Consumer;
 
 import ucu.edu.aed.tda.TDAElemento;
+import ucu.edu.aed.tda.TDALista;
 
 public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
 
@@ -387,4 +388,46 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
         }
         return elementoActual.getDato();
     }
+
+    public TDALista<T> completos(){
+        TDALista<T> resultado = new ListaEnlazada<>();
+        if (this.hijoIzq != null && this.hijoDer != null){
+            resultado.agregar(this.dato);
+        }
+        if (this.hijoIzq != null){
+            TDALista<T> completosIzq = this.hijoIzq.completos();
+            for (int i = 0; i < completosIzq.tamaño(); i++){
+                resultado.agregar(completosIzq.obtener(i));
+            }
+        }
+        if (this.hijoDer != null){
+            TDALista<T> completosDer = this.hijoDer.completos();
+            for (int i = 0; i < completosDer.tamaño(); i++){
+                resultado.agregar(completosDer.obtener(i));
+            }
+        }
+        return resultado;
+    }
+
+    public TDALista<T> enNivel(int nivel){
+        TDALista<T> resultado = new ListaEnlazada<>();
+        if (nivel == 0){
+            resultado.agregar(this.dato);
+            return resultado;
+        }
+        if (this.hijoIzq != null){
+            TDALista<T> izq = this.hijoIzq.enNivel(nivel - 1);
+            for (int i = 0; i < izq.tamaño(); i++){
+                resultado.agregar(izq.obtener(i));
+            }
+        }
+        if (this.hijoDer != null){
+            TDALista<T> der = this.hijoDer.enNivel(nivel - 1);
+            for (int i = 0; i < der.tamaño(); i++){
+                resultado.agregar(der.obtener(i));
+            }
+        }
+        return resultado;
+    }
+
 }
