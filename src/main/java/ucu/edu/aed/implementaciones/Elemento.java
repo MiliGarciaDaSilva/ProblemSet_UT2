@@ -389,6 +389,17 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
         return elementoActual.getDato();
     }
 
+    /*
+    Devuelve la mayor clave del subárbol que tiene como raíz este nodo
+    */
+    public T claveMayor(){
+        TDAElemento<T> elementoActual = this;
+        while (elementoActual.getHijoDerecho() != null){
+            elementoActual = elementoActual.getHijoDerecho();
+        }
+        return elementoActual.getDato();
+    }
+    
     public TDALista<T> completos(){
         TDALista<T> resultado = new ListaEnlazada<>();
         if (this.hijoIzq != null && this.hijoDer != null){

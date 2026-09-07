@@ -224,11 +224,20 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
         return raiz.obtenerNivel(criterioBusqueda);
     }
     
+    // devuleve clave menor del árbol
     public T claveMenor(){
-    if (raiz == null){
-        return null;
+        if (raiz == null){
+            return null;
+        }
+        return raiz.claveMenor();
     }
-    return raiz.claveMenor();
+
+    // devuelve clave mayor del árbol
+    public T claveMayor(){
+        if (raiz == null) {
+            return null;
+        }
+        return raiz.claveMayor();
     }
 
     public TDALista<T> completos(){

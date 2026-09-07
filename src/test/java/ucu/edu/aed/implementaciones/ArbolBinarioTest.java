@@ -227,6 +227,7 @@ public class ArbolBinarioTest extends TestCase {
         assertEquals(0, vacio.altura());
     }
 
+    /* tests de clave menor (ejercicio 11) */
     public void testClaveMenorConUnSoloNodo(){
         ArbolBinario<Integer> unSoloNodo = new ArbolBinario<>();
         unSoloNodo.insertar(5);
@@ -241,6 +242,8 @@ public class ArbolBinarioTest extends TestCase {
         a.insertar(8);
         assertEquals(Integer.valueOf(5), a.claveMenor());
     }
+    
+    /* tests de clave mayor (ejercicio 11)*/
     
     public void testAlturaRamaDegeneradaIzquierda(){
         ArbolBinario<Integer> ramaIzquierda = new ArbolBinario<>();

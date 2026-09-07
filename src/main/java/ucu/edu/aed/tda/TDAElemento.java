@@ -123,9 +123,13 @@ public interface TDAElemento <T>{
     int insertarContando(T nuevoDato);
 
     /*
-     Devuelve la menor clave del subárbol que tiene como raíz este nodo.
+     Devuelve la menor clave del subárbol que tiene como raíz este nodo
     */
     T claveMenor();
+
+    // devuelve la mayor clave del subárbol que tiene como raíz este nodo
+    T claveMayor();
+
     TDALista<T> completos();
 
     TDALista<T> enNivel(int nivel);
