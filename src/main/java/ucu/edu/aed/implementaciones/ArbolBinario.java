@@ -20,10 +20,10 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
     }
 
     public int altura(){
-    if (raiz == null){
-        return 0;
-    }
-    return raiz.altura();
+        if (raiz == null){
+            return 0;
+        }
+        return raiz.altura();
     }   
 
     /**
@@ -40,13 +40,13 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
             return null;
         }
         else {
-        TDAElemento<T> resultado = raiz.buscar(predicate);
-        if (resultado == null){
-            return null;
-        }
-        else{
-            return resultado.getDato();
-        }
+            TDAElemento<T> resultado = raiz.buscar(predicate);
+            if (resultado == null){
+                return null;
+            }
+            else{
+                return resultado.getDato();
+            }
         }
     }
 
@@ -112,10 +112,10 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
      *}
      */
     public void inOrder(Consumer<T> consumidor){
-    if (raiz == null){
-        return;
-    }
-    raiz.inOrder(nodo -> consumidor.accept(nodo.getDato()));
+        if (raiz == null){
+            return;
+        }
+        raiz.inOrder(nodo -> consumidor.accept(nodo.getDato()));
     }
 
     /**
@@ -129,10 +129,10 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
      *}
      */
     public void preOrder(Consumer<T> consumidor){
-    if (raiz == null){
-        return;
-    }
-    raiz.preOrder(nodo -> consumidor.accept(nodo.getDato()));
+        if (raiz == null){
+            return;
+        }
+        raiz.preOrder(nodo -> consumidor.accept(nodo.getDato()));
     }
 
     public String preOrderString(){
@@ -155,10 +155,10 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
      *}
      */
     public void postOrder(Consumer<T> consumidor){
-    if (raiz == null){
-        return;
-    }
-    raiz.postOrder(nodo -> consumidor.accept(nodo.getDato()));
+        if (raiz == null){
+            return;
+        }
+        raiz.postOrder(nodo -> consumidor.accept(nodo.getDato()));
     }
 
     public String postOrderString(){
@@ -190,20 +190,20 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
      * Devuelve la cantidad de nodos del árbol
      **/
     public int cantidadNodos(){
-    if (raiz == null){
-        return 0;
-    }
-    return raiz.cantidadNodos();
+        if (raiz == null){
+            return 0;
+        }
+        return raiz.cantidadNodos();
     }
 
     /**
      * Devuelve la cantidad de nodos que son hojas
      */
     public int cantidadHojas(){
-    if (raiz == null){
-        return 0;
-    }
-    return raiz.cantidadHojas();
+        if (raiz == null){
+            return 0;
+        }
+        return raiz.cantidadHojas();
     }
     
 
@@ -211,10 +211,10 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
      * Devuelve la cantidad de nodos que NO son hojas
      */
     public int cantidadNodosInternos(){
-    if (raiz == null){
-        return 0;
-    }
-    return raiz.cantidadNodosInternos();
+        if (raiz == null){
+            return 0;
+        }
+        return raiz.cantidadNodosInternos();
     }
 
     public int obtenerNivel(Comparable<T> criterioBusqueda){
@@ -238,6 +238,14 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
             return null;
         }
         return raiz.claveMayor();
+    }
+
+    // devuelve clave anterior a la ingredaden orden lexicográfico, si no tiene clave anterior devuelve null
+    public T claveAnterior(Comparable<T> clave) {
+        if (raiz == null) {
+            return null;
+        }
+        return raiz.claveAnterior(clave);
     }
 
     public TDALista<T> completos(){

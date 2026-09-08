@@ -130,6 +130,9 @@ public interface TDAElemento <T>{
     // devuelve la mayor clave del subárbol que tiene como raíz este nodo
     T claveMayor();
 
+    // devuelve la clave anterior en orden lexicográfico, si el nodo no tiene clave anterior devuelve null
+    T claveAnterior(Comparable<T> clave);
+
     TDALista<T> completos();
 
     TDALista<T> enNivel(int nivel);

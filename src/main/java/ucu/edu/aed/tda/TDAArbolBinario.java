@@ -126,7 +126,10 @@ public interface TDAArbolBinario<T> {
     
     // devuelve clave mayor del árbol, o null si el árbol está vacío
     T claveMayor();
-
+    
+    // devuelve clave anterior en orden lexicográfico, o null si el nodo ingresado no tiene clave anterior
+    T claveAnterior(Comparable<T> clave);
+    
     TDALista<T> completos();
 
     TDALista<T> enNivel(int nivel);

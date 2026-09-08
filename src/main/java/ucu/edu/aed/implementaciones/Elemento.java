@@ -399,7 +399,38 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
         }
         return elementoActual.getDato();
     }
-    
+
+    /*
+    Devuelve clave anterior en orden lexicográfico, si el nodo no tiene clave anterior devuelve null
+    */
+    public T claveAnterior(Comparable<T> clave){
+        // TODO implementar método
+        TDAElemento<T> candidato = null;
+        TDAElemento<T> elementoActual = this;
+
+        while (clave.compareTo(elementoActual.getDato()) != 0) {
+            if (clave.compareTo(elementoActual.getDato()) < 0) {
+                elementoActual = elementoActual.getHijoIzquierdo();
+            } else if (clave.compareTo(elementoActual.getDato()) > 0){
+                candidato = elementoActual; // guardamos el candidato antecesor
+                elementoActual = elementoActual.getHijoDerecho();
+            }
+        }
+
+        if (clave.compareTo(elementoActual.getDato()) == 0) { // encontramos la clave buscada
+            if (elementoActual.getHijoIzquierdo() == null) {
+                return candidato.getDato();
+            } else {
+                elementoActual = elementoActual.getHijoIzquierdo(); // realizamos la busqueda de la calve mayor del subárbol izquierdo
+                while (elementoActual.getHijoDerecho() != null) {
+                    elementoActual = elementoActual.getHijoDerecho();
+                }
+                return elementoActual.getDato();
+            }
+        }
+        return null;
+    }
+
     public TDALista<T> completos(){
         TDALista<T> resultado = new ListaEnlazada<>();
         if (this.hijoIzq != null && this.hijoDer != null){
