@@ -6,12 +6,7 @@ import ucu.edu.aed.tda.TDAArbolGenerico;
 import ucu.edu.aed.tda.TDAElementoGenerico;
 import ucu.edu.aed.tda.TDALista;
 
-/**
- * Árbol genérico (n-ario) implementado con nodos hijo izquierdo - hermano derecho.
- *
- * <p>Igual que en el árbol binario, la clase árbol es una cáscara sobre la raíz y la
- * recursión vive en el elemento.</p>
- */
+
 public class ArbolGenerico<T extends Comparable<T>> implements TDAArbolGenerico<T> {
 
     protected TDAElementoGenerico<T> raiz;
@@ -91,17 +86,6 @@ public class ArbolGenerico<T extends Comparable<T>> implements TDAArbolGenerico<
         raiz.postOrder(nodo -> consumidor.accept(nodo.getDato()));
     }
 
-    /**
-     * Recorrido por niveles: la lista se usa como cola (FIFO).
-     *
-     * <p>Es el único recorrido que no sale solo con recursión, porque va a lo ancho y no
-     * a lo hondo. La cola guarda los nodos ya visitados cuyos hijos todavía no se
-     * visitaron; como los hijos se encolan detrás de lo que falta del nivel actual,
-     * recién salen cuando ese nivel terminó.</p>
-     *
-     * <p>Sobre la {@code ListaEnlazada} las dos operaciones son O(1): {@code agregar} usa
-     * el puntero a la cola y {@code remover(0)} desengancha la cabeza.</p>
-     */
     @Override
     public void porNiveles(Consumer<T> consumidor){
         if (raiz == null){
