@@ -6,12 +6,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import ucu.edu.aed.implementaciones.ArbolBinario;
+import ucu.edu.aed.implementaciones.ArbolBinarioBusqueda;
 
 public class Main {
 
     public static void main(String[] args) {
-        ArbolBinario<Integer> arbol = new ArbolBinario<>();
+        ArbolBinarioBusqueda<Integer> arbol = new ArbolBinarioBusqueda<>();
 
         try (BufferedReader lectorClaves = new BufferedReader(new FileReader("src/main/java/ucu/edu/aed/ejercicio2/clavesPrueba.txt"));
              BufferedWriter escritorInserciones = new BufferedWriter(new FileWriter("src/main/java/ucu/edu/aed/ejercicio2/resultadoInserciones.txt"))) {

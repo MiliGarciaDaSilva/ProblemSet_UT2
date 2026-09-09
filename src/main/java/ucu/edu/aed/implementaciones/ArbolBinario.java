@@ -8,109 +8,112 @@ import ucu.edu.aed.tda.TDALista;
 
 public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T> {
 
-    private TDAElemento<T> raiz;
-    private int contador;
+    protected TDAElemento<T> raiz;
 
-    /**
-     * Devuelve la cantidad de invocaciones que costó la última inserción,
-     * o 0 si esa inserción no se realizó por tratarse de una clave repetida.
-     */
     public int getContador(){
-        return contador;
+        return 0;
     }
 
+    @Override
     public int altura(){
-        if (raiz == null){
-            return 0;
-        }
-        return raiz.altura();
-    }   
+    if (raiz == null){
+        return 0;
+    }
+    return raiz.altura();
+    }
 
-    /**
-     * Busca y retorna el primer elemento que cumple con el predicado dado.
-     *
-     * <p>El recorrido del árbol para la búsqueda queda sujeto a la implementación.</p>
-     *
-     * @param predicate el predicado que define el criterio de búsqueda
-     * @return el primer elemento que cumple el criterio, o {@code null}
-     * si no existe ninguno
-     */
+    @Override
     public T buscar(Comparable<T> predicate){
-        if (raiz == null){
+        return buscarEnNodo(raiz, predicate);
+    }
+
+    private T buscarEnNodo(TDAElemento<T> nodo, Comparable<T> predicate){
+        if (nodo == null){
             return null;
         }
-        else {
-            TDAElemento<T> resultado = raiz.buscar(predicate);
-            if (resultado == null){
-                return null;
-            }
-            else{
-                return resultado.getDato();
-            }
+        if (predicate.compareTo(nodo.getDato()) == 0){
+            return nodo.getDato();
         }
+        T resultado = buscarEnNodo(nodo.getHijoIzquierdo(), predicate);
+        if (resultado != null){
+            return resultado;
+        }
+        return buscarEnNodo(nodo.getHijoDerecho(), predicate);
     }
 
-    /**
-     * Retorna el elemento raíz del árbol.
-     *
-     * @return el elemento raíz del árbol, o {@code null} si el árbol está vacío
-     */
+    @Override
     public TDAElemento<T> obtenerRaiz(){
         return raiz;
     }
 
-    /**
-     * Elimina el o los nodos según el criterio de búsqueda.
-     *
-     * @param criterioBusqueda el predicado que define qué elementos deben ser eliminados
-     * @return {@code true} si al menos un elemento fue eliminado;
-     * {@code false} en caso contrario
-     */
+    @Override
     public boolean eliminar(Comparable<T> criterioBusqueda){
-        if (raiz == null){
+        if (buscar(criterioBusqueda) == null){
             return false;
         }
-        if (raiz.buscar(criterioBusqueda) == null)
-        {
-            return false;
-        }
-        else {
-            raiz = raiz.eliminar(criterioBusqueda);
-            return true;
-        }
+        raiz = eliminarEnNodo(raiz, criterioBusqueda);
+        return true;
     }
 
-    /**
-     * Agrega un dato al árbol.
-     *
-     * <p>Si el dato ya existe en el árbol, no se agrega nuevamente.</p>
-     *
-     * @param dato el elemento a insertar
-     * @return {@code true} si el elemento fue agregado correctamente;
-     * {@code false} si el elemento ya existía y no fue agregado
-     */
+    private TDAElemento<T> eliminarEnNodo(TDAElemento<T> nodo, Comparable<T> criterioBusqueda){
+        if (nodo == null){
+            return null;
+        }
+        if (criterioBusqueda.compareTo(nodo.getDato()) == 0){
+            return quitarNodo(nodo);
+        }
+        nodo.setHijoIzquierdo(eliminarEnNodo(nodo.getHijoIzquierdo(), criterioBusqueda));
+        nodo.setHijoDerecho(eliminarEnNodo(nodo.getHijoDerecho(), criterioBusqueda));
+        return nodo;
+    }
+
+    private TDAElemento<T> quitarNodo(TDAElemento<T> nodo){
+        if (nodo.getHijoIzquierdo() == null){
+            return nodo.getHijoDerecho();
+        }
+        if (nodo.getHijoDerecho() == null){
+            return nodo.getHijoIzquierdo();
+        }
+        TDAElemento<T> elHijo = nodo.getHijoIzquierdo();
+        TDAElemento<T> elPadre = nodo;
+        while (elHijo.getHijoDerecho() != null){
+            elPadre = elHijo;
+            elHijo = elHijo.getHijoDerecho();
+        }
+        if (elPadre != nodo){
+            elPadre.setHijoDerecho(elHijo.getHijoIzquierdo());
+            elHijo.setHijoIzquierdo(nodo.getHijoIzquierdo());
+        }
+        elHijo.setHijoDerecho(nodo.getHijoDerecho());
+        return elHijo;
+    }
+
+    @Override
     public boolean insertar(T dato){
-        if (raiz == null){
-            raiz = new Elemento<>(dato);
-            contador = 1;
+        raiz = insertarEnNodo(raiz, dato);
+        return true;
+    }
+
+    private TDAElemento<T> insertarEnNodo(TDAElemento<T> nodo, T dato){
+        if (nodo == null){
+            return new Elemento<>(dato);
+        }
+        if (nodo.getHijoIzquierdo() == null){
+            nodo.setHijoIzquierdo(new Elemento<>(dato));
+        }
+        else if (nodo.getHijoDerecho() == null){
+            nodo.setHijoDerecho(new Elemento<>(dato));
+        }
+        else if (nodo.getHijoIzquierdo().cantidadNodos() <= nodo.getHijoDerecho().cantidadNodos()){
+            nodo.setHijoIzquierdo(insertarEnNodo(nodo.getHijoIzquierdo(), dato));
         }
         else{
-            contador = raiz.insertarContando(dato);
+            nodo.setHijoDerecho(insertarEnNodo(nodo.getHijoDerecho(), dato));
         }
-        System.out.println("contador = " + contador);
-        return contador > 0;
+        return nodo;
     }
 
-    /**
-     * Recorre el árbol en in-order
-     * {@snippet :
-     * // ejemplo de uso
-     * elemento.inOrder(dato ->{
-     *     // procesar dato
-     *     // esta función se llama tantas veces como nodos halla en el árbol
-     * });
-     *}
-     */
+    @Override
     public void inOrder(Consumer<T> consumidor){
         if (raiz == null){
             return;
@@ -118,16 +121,7 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
         raiz.inOrder(nodo -> consumidor.accept(nodo.getDato()));
     }
 
-    /**
-     * Recorre el árbol en pre-order
-     * {@snippet :
-     * // ejemplo de uso
-     * elemento.preOrder(dato ->{
-     *     // procesar dato
-     *     // esta función se llama tantas veces como nodos halla en el árbol
-     * });
-     *}
-     */
+    @Override
     public void preOrder(Consumer<T> consumidor){
         if (raiz == null){
             return;
@@ -135,6 +129,7 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
         raiz.preOrder(nodo -> consumidor.accept(nodo.getDato()));
     }
 
+    @Override
     public String preOrderString(){
         StringBuilder resultado = new StringBuilder();
         preOrder(dato -> resultado.append(dato).append(","));
@@ -142,18 +137,10 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
             resultado.setLength(resultado.length() - 1);
         }
         return resultado.toString();
-    } 
+    }
 
-    /**
-     * Recorre el árbol en post-order
-     * {@snippet :
-     * // ejemplo de uso
-     * elemento.postOrder(dato ->{
-     *     // procesar dato
-     *     // esta función se llama tantas veces como nodos halla en el árbol
-     * });
-     *}
-     */
+
+    @Override
     public void postOrder(Consumer<T> consumidor){
         if (raiz == null){
             return;
@@ -161,6 +148,7 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
         raiz.postOrder(nodo -> consumidor.accept(nodo.getDato()));
     }
 
+    @Override
     public String postOrderString(){
         StringBuilder resultado = new StringBuilder();
         postOrder(dato -> resultado.append(dato).append(","));
@@ -170,6 +158,7 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
         return resultado.toString();
     }
 
+    @Override
     public String inOrderString(){
         StringBuilder resultado = new StringBuilder();
         inOrder(dato -> resultado.append(dato).append(","));
@@ -179,16 +168,13 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
         return resultado.toString();
     }
 
-    /**
-     * Devuelve true si el árbol es vacío
-     */
+
+    @Override
     public boolean esVacio(){
         return raiz == null;
     }
 
-    /**
-     * Devuelve la cantidad de nodos del árbol
-     **/
+    @Override
     public int cantidadNodos(){
         if (raiz == null){
             return 0;
@@ -196,20 +182,17 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
         return raiz.cantidadNodos();
     }
 
-    /**
-     * Devuelve la cantidad de nodos que son hojas
-     */
+
+    @Override
     public int cantidadHojas(){
         if (raiz == null){
             return 0;
         }
         return raiz.cantidadHojas();
     }
-    
 
-    /**
-     * Devuelve la cantidad de nodos que NO son hojas
-     */
+
+    @Override
     public int cantidadNodosInternos(){
         if (raiz == null){
             return 0;
@@ -217,11 +200,9 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
         return raiz.cantidadNodosInternos();
     }
 
+    @Override
     public int obtenerNivel(Comparable<T> criterioBusqueda){
-        if (raiz == null){
-            return -1;
-        }
-        return raiz.obtenerNivel(criterioBusqueda);
+        return -1;
     }
     
     // devuleve clave menor del árbol
@@ -269,6 +250,7 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
         return raiz.esArbolDeBusqueda(null, null);
     }
 
+    @Override
     public TDALista<T> completos(){
         if (raiz == null){
             return new ListaEnlazada<>();
@@ -276,6 +258,7 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
         return raiz.completos();
     }
 
+    @Override
     public TDALista<T> enNivel(int nivel){
         if (raiz == null){
             return new ListaEnlazada<>();

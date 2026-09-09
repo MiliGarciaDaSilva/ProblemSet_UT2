@@ -2,14 +2,14 @@ package ucu.edu.aed.ejercicio3;
 
 import junit.framework.TestCase;
 
-import ucu.edu.aed.implementaciones.ArbolBinario;
+import ucu.edu.aed.implementaciones.ArbolBinarioBusqueda;
 
 public class TestEjercicio3 extends TestCase {
 
-    private ArbolBinario<Integer> arbol;
+    private ArbolBinarioBusqueda<Integer> arbol;
 
     protected void setUp(){
-        arbol = new ArbolBinario<>();
+        arbol = new ArbolBinarioBusqueda<>();
         int[] claves = {12, 25, 14, 1, 33, 88, 45, 2, 7, 66, 5, 99};
         for (int clave : claves) {
             arbol.insertar(clave);

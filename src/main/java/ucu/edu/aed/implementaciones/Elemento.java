@@ -17,49 +17,56 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
         hijoIzq = null;
     }
 
+    @Override
     public void setHijoIzquierdo(TDAElemento<T> hijoIzquierdo){
         this.hijoIzq = hijoIzquierdo;
     }
-    
+
     /**
      * Asigna el nodo derecho del nodo actual. Puede ser nulo.
      */
+    @Override
     public void setHijoDerecho(TDAElemento<T> hijoDerecho){
         this.hijoDer = hijoDerecho;
     }
-    
+
     /**
      * Devuelve el hijo derecho del nodo actual. El valor es nulo si no tiene hijo derecho.
      */
+    @Override
     public TDAElemento<T> getHijoIzquierdo(){
         return hijoIzq;
     }
-    
+
     /**
      * Devuelve el hijo izquierdo del nodo actual. El valor es nulo si no tiene hijo izquierdo.
      */
+    @Override
     public TDAElemento<T> getHijoDerecho(){
         return hijoDer;
     }
-    
+
     /**
      * Actualiza el dato del nodo actual.
      */
+    @Override
     public void setDato(T datoNuevo){
         dato = datoNuevo;
     }
-    
+
     /**
      * devuelve el dato del nodo actual.
      */
+    @Override
     public T getDato(){
         return dato;
     }
-    
+
     /**
      * Busca un nodo por un criterio de búsqueda.
      * Si no se encuentra, retorna nulo.
      */
+    @Override
     public TDAElemento<T> buscar(Comparable<T> criterioBusqueda){
         TDAElemento<T> resultado = null;
         if (criterioBusqueda.compareTo(this.dato) == 0){
@@ -86,6 +93,7 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
      * Elimina un nodo del árbol según el criterio de búsqueda.
      * Si se encuentra, se retorna el nodo borrado. En otro caso retornar null.
      */
+    @Override
     public TDAElemento<T> eliminar(Comparable<T> criterioBusqueda){
         if (criterioBusqueda.compareTo(dato) < 0){
             //está del lado izquierdo
@@ -136,6 +144,7 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
      * Agrega un nuevo elemento al árbol
      * Si el nuevoDato existe, no se agrega
      */
+    @Override
     public boolean insertar(T nuevoDato){
         if (nuevoDato.compareTo(this.dato) > 0){
             // NuevoDatos es mayor que el elemento actual
@@ -166,6 +175,7 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
     * Inserta un nuevo dato contando las invocaciones recursivas.
     * Retorna la cantidad de invocaciones si se insertó, o 0 si el dato ya existía.
     */
+    @Override
     public int insertarContando(T nuevoDato){
     int dato = nuevoDato.compareTo(this.dato);
 
@@ -210,6 +220,7 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
      * });
      *}
      */
+    @Override
     public void inOrder(Consumer<TDAElemento<T>> consumidor){
         if (this.hijoIzq != null){
             this.hijoIzq.inOrder(consumidor);
@@ -229,6 +240,7 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
      * });
      *}
      */
+    @Override
     public void preOrder(Consumer<TDAElemento<T>> consumidor){
         consumidor.accept(this);
         if (hijoIzq != null){
@@ -248,6 +260,7 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
      * });
      *}
      */
+    @Override
     public void postOrder(Consumer<TDAElemento<T>> consumidor){
         if (hijoIzq != null){
             this.hijoIzq.postOrder(consumidor);
@@ -272,6 +285,7 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
     /**
      * retorna la cantidad de nodos que son hijas
      */
+    @Override
     public int cantidadHojas(){
         // si no tiene hijos, es una hoja
         if (this.hijoIzq == null && this.hijoDer == null){
@@ -293,6 +307,7 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
     /**
      * retorna la cantidad de nodos que no son hojas
      */
+    @Override
     public int cantidadNodosInternos(){
         // si es hoja, no es interno
         if (this.hijoIzq == null && this.hijoDer == null){
@@ -314,6 +329,7 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
     /**
      * retorna la cantidad de nodos que los compone
      */
+    @Override
     public int cantidadNodos(){
         int contadorIzq = 0;
         int contadorDer = 0;
@@ -330,6 +346,7 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
     /**
      * retorna la altura de este nodo
      */
+    @Override
     public int altura(){
         // hoja: altura 1
         if (this.hijoIzq == null && this.hijoDer == null){
@@ -351,6 +368,7 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
      * retornar el nivel relativo del nodo que coincide con el criterio de búsqueda
      * si no se encuentra, retorna -1
      */
+    @Override
     public int obtenerNivel(Comparable<T> criterioBusqueda){
         // este nodo es el buscado
         if (criterioBusqueda.compareTo(dato) == 0){
@@ -381,6 +399,7 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
     /*
     Devuelve la menor clave del subárbol que tiene como raíz este nodo
     */
+    @Override
     public T claveMenor(){
         TDAElemento<T> elementoActual = this;
         while (elementoActual.getHijoIzquierdo() != null){
@@ -476,6 +495,7 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
         return izqOk && derOk;
     }
 
+    @Override
     public TDALista<T> completos(){
         TDALista<T> resultado = new ListaEnlazada<>();
         if (this.hijoIzq != null && this.hijoDer != null){
@@ -496,6 +516,7 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
         return resultado;
     }
 
+    @Override
     public TDALista<T> enNivel(int nivel){
         TDALista<T> resultado = new ListaEnlazada<>();
         if (nivel == 0){
