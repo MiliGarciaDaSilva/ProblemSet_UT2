@@ -248,6 +248,27 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
         return raiz.claveAnterior(clave);
     }
 
+    public int cantidadNodosEnNivel(int nivel){
+        if (raiz == null || nivel < 0){
+            return 0;
+        }
+        return raiz.cantidadNodosEnNivel(nivel);
+    }
+
+    public TDALista<String> hojasConNivel(){
+        if (raiz == null){
+            return new ListaEnlazada<>();
+        }
+        return raiz.hojasConNivel(0);
+    }
+
+    public boolean esArbolDeBusqueda(){
+        if (raiz == null){
+            return true;
+        }
+        return raiz.esArbolDeBusqueda(null, null);
+    }
+
     public TDALista<T> completos(){
         if (raiz == null){
             return new ListaEnlazada<>();
