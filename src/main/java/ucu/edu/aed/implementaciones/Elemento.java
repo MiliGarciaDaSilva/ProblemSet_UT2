@@ -408,6 +408,93 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
         return elementoActual.getDato();
     }
 
+    /*
+    Devuelve la mayor clave del subárbol que tiene como raíz este nodo
+    */
+    public T claveMayor(){
+        TDAElemento<T> elementoActual = this;
+        while (elementoActual.getHijoDerecho() != null){
+            elementoActual = elementoActual.getHijoDerecho();
+        }
+        return elementoActual.getDato();
+    }
+
+    /*
+    Devuelve clave anterior en orden lexicográfico, si el nodo no tiene clave anterior devuelve null
+    */
+    public T claveAnterior(Comparable<T> clave){
+        TDAElemento<T> candidato = null;
+        TDAElemento<T> elementoActual = this;
+
+        while (clave.compareTo(elementoActual.getDato()) != 0) {
+            if (clave.compareTo(elementoActual.getDato()) < 0) {
+                elementoActual = elementoActual.getHijoIzquierdo();
+            } else if (clave.compareTo(elementoActual.getDato()) > 0){
+                candidato = elementoActual; // guardamos el candidato antecesor
+                elementoActual = elementoActual.getHijoDerecho();
+            }
+        }
+
+        if (clave.compareTo(elementoActual.getDato()) == 0) { // encontramos la clave buscada
+            if (elementoActual.getHijoIzquierdo() == null) {
+                if (candidato != null) {
+                    return candidato.getDato();
+                } else {
+                    return null;
+                }
+            } else {
+                elementoActual = elementoActual.getHijoIzquierdo(); // realizamos la busqueda de la calve mayor del subárbol izquierdo
+                while (elementoActual.getHijoDerecho() != null) {
+                    elementoActual = elementoActual.getHijoDerecho();
+                }
+                return elementoActual.getDato();
+            }
+        }
+        return null;
+    }
+
+    public int cantidadNodosEnNivel(int nivel){
+        if (nivel == 0){
+            return 1;
+        }
+        int cantidadIzq = (hijoIzq != null) ? hijoIzq.cantidadNodosEnNivel(nivel - 1) : 0;
+        int cantidadDer = (hijoDer != null) ? hijoDer.cantidadNodosEnNivel(nivel - 1) : 0;
+        return cantidadIzq + cantidadDer;
+    }
+
+    public TDALista<String> hojasConNivel(int nivelActual){
+        TDALista<String> resultado = new ListaEnlazada<>();
+        if (this.esHoja()){
+            resultado.agregar(this.dato + " (nivel " + nivelActual + ")");
+        } else {
+            if (hijoIzq != null){
+                TDALista<String> hojasIzq = hijoIzq.hojasConNivel(nivelActual + 1);
+                for (int i = 0; i < hojasIzq.tamaño(); i++){
+                    resultado.agregar(hojasIzq.obtener(i));
+                }
+            }
+            if (hijoDer != null){
+                TDALista<String> hojasDer = hijoDer.hojasConNivel(nivelActual + 1);
+                for (int i = 0; i < hojasDer.tamaño(); i++){
+                    resultado.agregar(hojasDer.obtener(i));
+                }
+            }
+        }
+        return resultado;
+    }
+
+    public boolean esArbolDeBusqueda(T minPermitido, T maxPermitido){
+        if (minPermitido != null && this.dato.compareTo(minPermitido) <= 0){
+            return false;
+        }
+        if (maxPermitido != null && this.dato.compareTo(maxPermitido) >= 0){
+            return false;
+        }
+        boolean izqOk = (hijoIzq == null) || hijoIzq.esArbolDeBusqueda(minPermitido, this.dato);
+        boolean derOk = (hijoDer == null) || hijoDer.esArbolDeBusqueda(this.dato, maxPermitido);
+        return izqOk && derOk;
+    }
+
     @Override
     public TDALista<T> completos(){
         TDALista<T> resultado = new ListaEnlazada<>();

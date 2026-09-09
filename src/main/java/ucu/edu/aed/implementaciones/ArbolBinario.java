@@ -115,18 +115,18 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
 
     @Override
     public void inOrder(Consumer<T> consumidor){
-    if (raiz == null){
-        return;
-    }
-    raiz.inOrder(nodo -> consumidor.accept(nodo.getDato()));
+        if (raiz == null){
+            return;
+        }
+        raiz.inOrder(nodo -> consumidor.accept(nodo.getDato()));
     }
 
     @Override
     public void preOrder(Consumer<T> consumidor){
-    if (raiz == null){
-        return;
-    }
-    raiz.preOrder(nodo -> consumidor.accept(nodo.getDato()));
+        if (raiz == null){
+            return;
+        }
+        raiz.preOrder(nodo -> consumidor.accept(nodo.getDato()));
     }
 
     @Override
@@ -142,10 +142,10 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
 
     @Override
     public void postOrder(Consumer<T> consumidor){
-    if (raiz == null){
-        return;
-    }
-    raiz.postOrder(nodo -> consumidor.accept(nodo.getDato()));
+        if (raiz == null){
+            return;
+        }
+        raiz.postOrder(nodo -> consumidor.accept(nodo.getDato()));
     }
 
     @Override
@@ -176,38 +176,78 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
 
     @Override
     public int cantidadNodos(){
-    if (raiz == null){
-        return 0;
-    }
-    return raiz.cantidadNodos();
+        if (raiz == null){
+            return 0;
+        }
+        return raiz.cantidadNodos();
     }
 
 
     @Override
     public int cantidadHojas(){
-    if (raiz == null){
-        return 0;
-    }
-    return raiz.cantidadHojas();
+        if (raiz == null){
+            return 0;
+        }
+        return raiz.cantidadHojas();
     }
 
 
     @Override
     public int cantidadNodosInternos(){
-    if (raiz == null){
-        return 0;
-    }
-    return raiz.cantidadNodosInternos();
+        if (raiz == null){
+            return 0;
+        }
+        return raiz.cantidadNodosInternos();
     }
 
     @Override
     public int obtenerNivel(Comparable<T> criterioBusqueda){
         return -1;
     }
-
-    @Override
+    
+    // devuleve clave menor del árbol
     public T claveMenor(){
-        return null;
+        if (raiz == null){
+            return null;
+        }
+        return raiz.claveMenor();
+    }
+
+    // devuelve clave mayor del árbol
+    public T claveMayor(){
+        if (raiz == null) {
+            return null;
+        }
+        return raiz.claveMayor();
+    }
+
+    // devuelve clave anterior a la ingredaden orden lexicográfico, si no tiene clave anterior devuelve null
+    public T claveAnterior(Comparable<T> clave) {
+        if (raiz == null) {
+            return null;
+        }
+        return raiz.claveAnterior(clave);
+    }
+
+    public int cantidadNodosEnNivel(int nivel){
+        if (raiz == null || nivel < 0){
+            return 0;
+        }
+        return raiz.cantidadNodosEnNivel(nivel);
+    }
+
+    public TDALista<String> hojasConNivel(){
+        if (raiz == null){
+            return new ListaEnlazada<>();
+        }
+        return raiz.hojasConNivel(0);
+    }
+
+    public boolean esArbolDeBusqueda(){
+        if (raiz == null){
+            return true;
+        }
+        return raiz.esArbolDeBusqueda(null, null);
     }
 
     @Override
