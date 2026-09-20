@@ -33,6 +33,7 @@ public class ArbolBinarioBusqueda<T extends Comparable<T>> extends ArbolBinario<
         }
         else {
             raiz = raiz.eliminar(criterioBusqueda);
+            cantidadNodos--;
             return true;
         }
     }
@@ -47,7 +48,11 @@ public class ArbolBinarioBusqueda<T extends Comparable<T>> extends ArbolBinario<
             contador = raiz.insertarContando(dato);
         }
         System.out.println("contador = " + contador);
-        return contador > 0;
+        boolean exito = contador > 0;
+        if (exito){
+            cantidadNodos++;
+        }
+        return exito;
     }
 
     @Override

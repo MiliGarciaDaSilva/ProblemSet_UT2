@@ -1,0 +1,59 @@
+Ejercicio 12 - El Grimorio del Archimago
+
+1) Hechizos prohibidos
+
+Lenguaje Natural:
+Recorre el arbol completo, sin importar el orden, y por cada hechizo cuyo ID
+sea impar lo agrega a una lista de resultado.
+
+Pre: el arbol existe (vacio o no).
+Post: devuelve una lista con todos los hechizos de ID impar. Lista vacia si
+no hay ninguno. El arbol no se modifica.
+
+hechizosProhibidos(raiz) devuelve lista
+  resultado <- lista vacia
+  agregarProhibidos(raiz, resultado)
+  devolver resultado
+fin 
+
+agregarProhibidos(nodo, resultado)
+  si nodo es nulo entonces
+    devolver
+  fin si
+  agregarProhibidos(nodo.izquierdo, resultado)
+  si nodo.dato.id es impar entonces
+    resultado.agregar(nodo.dato)
+  fin si
+  agregarProhibidos(nodo.derecho, resultado)
+fin
+
+Tiempo: O(n), porque visita cada nodo del arbol una sola vez.
+
+
+2) Cantico
+
+Lenguaje Natural:
+Usa la lista que devuelve hechizosProhibidos (ya queda en orden ascendente
+por ID, porque ese algoritmo recorre primero la izquierda, despues el nodo
+y despues la derecha) y concatena el nombre de cada hechizo, separando uno
+del siguiente con " - ".
+
+Pre: el arbol existe (vacio o no).
+Post: devuelve los nombres de los hechizos prohibidos, en orden ascendente
+por ID, separados por " - ". Cadena vacia si no hay ninguno.
+
+cantico(raiz) devuelve string
+  prohibidos <- hechizosProhibidos(raiz)
+  resultado <- ""
+  para i desde 0 hasta cantidad(prohibidos) - 1 hacer
+    resultado <- resultado + prohibidos[i].nombre
+    si i < cantidad(prohibidos) - 1 entonces
+      resultado <- resultado + " - "
+    fin si
+  fin para
+  devolver resultado
+fin
+
+Tiempo: armar la lista cuesta O(n). Recorrerla y concatenar cada nombre
+cuesta O(k), siendo k la cantidad de hechizos prohibidos (k <= n). En total
+sigue siendo O(n).

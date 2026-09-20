@@ -325,7 +325,7 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
         // este nodo sí es interno, por eso el +1
         return 1 + contadorIzq + contadorDer;
     }
-    
+
     /**
      * retorna la cantidad de nodos que los compone
      */
@@ -339,10 +339,9 @@ public class Elemento<T extends Comparable<T>> implements TDAElemento<T>{
         if (this.hijoDer != null){
             contadorDer = this.hijoDer.cantidadNodos();
         }
-        // +1 por este nodo
         return 1 + contadorIzq + contadorDer;
     }
-    
+
     /**
      * retorna la altura de este nodo
      */

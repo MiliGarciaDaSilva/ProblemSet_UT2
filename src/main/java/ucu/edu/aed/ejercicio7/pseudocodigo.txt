@@ -1,0 +1,37 @@
+Ejercicio 7 - Parte 1.
+
+
+1) Sustituir variables
+
+Recorre el arbol completo. En cada hoja, si su dato coincide con el nombre
+de una variable presente en los valores dados, la reemplaza por ese valor.
+En los nodos operadores, aplica el mismo proceso a ambos hijos.
+
+Pre: el arbol existe y representa una expresion valida.
+Post: las hojas cuya variable aparecia en los valores dados quedan con su
+valor numerico. Las constantes y las variables sin valor dado no cambian.
+
+sustituirVariables(nodo, valores)
+  si nodo es hoja entonces
+    si valores contiene la clave nodo.dato entonces
+      nodo.dato <- valores[nodo.dato]
+    fin si
+  si no
+    sustituirVariables(nodo.izquierdo, valores)
+    sustituirVariables(nodo.derecho, valores)
+  fin si
+fin
+
+Tiempo: O(n), porque visita cada nodo del arbol una sola vez.
+
+
+2) Evaluar la expresion
+
+Si el nodo es hoja, devuelve su valor numerico. Si es un operador, evalua
+recursivamente el hijo izquierdo y el derecho, y aplica el operador sobre
+esos dos resultados.
+
+Pre: el arbol existe y las variables ya fueron sustituidas por su valor.
+Post: devuelve el valor numerico de evaluar toda la expresion.
+
+Tiempo: O(n), por la misma razon que el punto anterior.

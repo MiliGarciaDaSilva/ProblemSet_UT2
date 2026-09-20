@@ -2,6 +2,8 @@ package ucu.edu.aed.implementaciones;
 
 import junit.framework.TestCase;
 
+import ucu.edu.aed.tda.TDALista;
+
 public class ArbolBinarioTest extends TestCase {
 
     private ArbolBinario<Integer> arbol;
@@ -37,7 +39,7 @@ public class ArbolBinarioTest extends TestCase {
 
     public void testInsertarRepartaEntreRamas(){
         assertEquals(7, arbol.cantidadNodos());
-        assertEquals("1,2,4,6,3,5,7", arbol.preOrderString());
+        assertEquals("1,2,4,5,3,6,7", arbol.preOrderString());
     }
 
     public void testCantidadNodos(){
@@ -67,15 +69,15 @@ public class ArbolBinarioTest extends TestCase {
     }
 
     public void testPreOrderString(){
-        assertEquals("1,2,4,6,3,5,7", arbol.preOrderString());
+        assertEquals("1,2,4,5,3,6,7", arbol.preOrderString());
     }
 
     public void testInOrderString(){
-        assertEquals("4,2,6,1,5,3,7", arbol.inOrderString());
+        assertEquals("4,2,5,1,6,3,7", arbol.inOrderString());
     }
 
     public void testPostOrderString(){
-        assertEquals("4,6,2,5,7,3,1", arbol.postOrderString());
+        assertEquals("4,5,2,6,7,3,1", arbol.postOrderString());
     }
 
     public void testPreOrderStringEnArbolVacio(){
@@ -83,9 +85,24 @@ public class ArbolBinarioTest extends TestCase {
         assertEquals("", vacio.preOrderString());
     }
 
+    public void testCompletos(){
+        TDALista<Integer> completos = arbol.completos();
+        assertEquals(3, completos.tamaño());
+        assertTrue(completos.contiene(1));
+        assertTrue(completos.contiene(2));
+        assertTrue(completos.contiene(3));
+    }
+
     public void testCompletosEnArbolVacio(){
         ArbolBinario<Integer> vacio = new ArbolBinario<>();
         assertEquals(0, vacio.completos().tamaño());
+    }
+
+    public void testEnNivel(){
+        assertEquals(1, arbol.enNivel(0).tamaño());
+        assertEquals(2, arbol.enNivel(1).tamaño());
+        assertEquals(4, arbol.enNivel(2).tamaño());
+        assertEquals(0, arbol.enNivel(3).tamaño());
     }
 
     public void testEnNivelEnArbolVacio(){
@@ -93,8 +110,14 @@ public class ArbolBinarioTest extends TestCase {
         assertEquals(0, vacio.enNivel(0).tamaño());
     }
 
+    public void testCantidadNodosDeNodo(){
+        assertEquals(7, arbol.obtenerRaiz().cantidadNodos());
+        assertEquals(3, arbol.obtenerRaiz().getHijoIzquierdo().cantidadNodos());
+        assertEquals(1, arbol.obtenerRaiz().getHijoIzquierdo().getHijoIzquierdo().cantidadNodos());
+    }
+
     public void testBuscarElementoExistente(){
-        assertEquals(Integer.valueOf(6), arbol.buscar(6));
+        assertEquals(Integer.valueOf(7), arbol.buscar(7));
         assertEquals(Integer.valueOf(1), arbol.buscar(1));
     }
 
@@ -116,7 +139,7 @@ public class ArbolBinarioTest extends TestCase {
     public void testEliminarRaizConDosHijos(){
         assertTrue(arbol.eliminar(1));
         assertEquals(6, arbol.cantidadNodos());
-        assertEquals("6,2,4,3,5,7", arbol.preOrderString());
+        assertEquals("5,2,4,3,6,7", arbol.preOrderString());
     }
 
     public void testEliminarClaveInexistente(){

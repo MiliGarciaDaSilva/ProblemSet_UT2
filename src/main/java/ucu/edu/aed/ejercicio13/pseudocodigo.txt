@@ -1,0 +1,63 @@
+Ejercicio 13
+
+1) Naves exploradoras
+
+Lenguaje Natural:
+Recorre el arbol completo y, por cada nave cuya clase sea "Explorador",
+agrega su codigo a una lista de resultado.
+
+Pre: el arbol existe (vacio o no).
+Post: devuelve una lista con los codigos de las naves exploradoras. Lista
+vacia si no hay ninguna. El arbol no se modifica.
+
+navesExploradoras(raiz) devuelve lista
+  resultado <- lista vacia
+  agregarExploradoras(raiz, resultado)
+  devolver resultado
+fin 
+
+agregarExploradoras(nodo, resultado)
+  si nodo es nulo entonces
+    devolver
+  fin si
+  agregarExploradoras(nodo.izquierdo, resultado)
+  si nodo.dato.clase es "Explorador" entonces
+    resultado.agregar(nodo.dato.codigo)
+  fin si
+  agregarExploradoras(nodo.derecho, resultado)
+fin 
+
+Tiempo: O(n), porque visita cada nodo del arbol una sola vez. Esto vale
+tanto si el arbol esta balanceado como si no; el balance del AVL ayuda a
+insertar y buscar en O(log n), pero recorrerlo entero siempre es O(n).
+
+
+2) Combustible promedio de las exploradoras
+
+Lenguaje Narutal:
+Usa la lista que devuelve navesExploradoras. Por cada codigo de esa lista,
+busca la nave correspondiente en el arbol y suma su combustible disponible.
+Al terminar, divide la suma entre la cantidad de codigos para obtener el
+promedio.
+
+Pre: el arbol existe (vacio o no).
+Post: devuelve el promedio de combustible disponible de las naves
+exploradoras. Si no hay ninguna, devuelve 0 para evitar dividir por cero.
+
+combustiblePromedioExploradoras(raiz) devuelve numero
+  codigos <- navesExploradoras(raiz)
+  si codigos es vacia entonces
+    devolver 0
+  fin si
+  suma <- 0
+  para cada codigo en codigos hacer
+    nave <- buscar(raiz, codigo)
+    suma <- suma + nave.combustible
+  fin para
+  devolver suma / cantidad(codigos)
+fin
+
+Tiempo: armar la lista cuesta O(n). Buscar cada nave por codigo en el AVL
+cuesta O(log n), y se hace una vez por cada codigo de la lista (a lo sumo
+n). En el peor caso, cuando todas las naves son exploradoras, el total
+queda en O(n log n).

@@ -1,5 +1,7 @@
 package ucu.edu.aed.implementaciones;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.function.Consumer;
 
 import ucu.edu.aed.tda.TDAArbolBinario;
@@ -9,6 +11,7 @@ import ucu.edu.aed.tda.TDALista;
 public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T> {
 
     protected TDAElemento<T> raiz;
+    protected int cantidadNodos;
 
     public int getContador(){
         return 0;
@@ -52,6 +55,7 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
             return false;
         }
         raiz = eliminarEnNodo(raiz, criterioBusqueda);
+        cantidadNodos--;
         return true;
     }
 
@@ -90,27 +94,29 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
 
     @Override
     public boolean insertar(T dato){
-        raiz = insertarEnNodo(raiz, dato);
-        return true;
-    }
-
-    private TDAElemento<T> insertarEnNodo(TDAElemento<T> nodo, T dato){
-        if (nodo == null){
-            return new Elemento<>(dato);
+        if (raiz == null){
+            raiz = new Elemento<>(dato);
+            cantidadNodos++;
+            return true;
         }
-        if (nodo.getHijoIzquierdo() == null){
-            nodo.setHijoIzquierdo(new Elemento<>(dato));
+        Queue<TDAElemento<T>> cola = new LinkedList<>();
+        cola.add(raiz);
+        while (!cola.isEmpty()){
+            TDAElemento<T> actual = cola.poll();
+            if (actual.getHijoIzquierdo() == null){
+                actual.setHijoIzquierdo(new Elemento<>(dato));
+                cantidadNodos++;
+                return true;
+            }
+            cola.add(actual.getHijoIzquierdo());
+            if (actual.getHijoDerecho() == null){
+                actual.setHijoDerecho(new Elemento<>(dato));
+                cantidadNodos++;
+                return true;
+            }
+            cola.add(actual.getHijoDerecho());
         }
-        else if (nodo.getHijoDerecho() == null){
-            nodo.setHijoDerecho(new Elemento<>(dato));
-        }
-        else if (nodo.getHijoIzquierdo().cantidadNodos() <= nodo.getHijoDerecho().cantidadNodos()){
-            nodo.setHijoIzquierdo(insertarEnNodo(nodo.getHijoIzquierdo(), dato));
-        }
-        else{
-            nodo.setHijoDerecho(insertarEnNodo(nodo.getHijoDerecho(), dato));
-        }
-        return nodo;
+        return false;
     }
 
     @Override
@@ -176,10 +182,7 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
 
     @Override
     public int cantidadNodos(){
-    if (raiz == null){
-        return 0;
-    }
-    return raiz.cantidadNodos();
+        return cantidadNodos;
     }
 
 
