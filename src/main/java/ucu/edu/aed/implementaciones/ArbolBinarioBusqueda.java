@@ -2,6 +2,7 @@ package ucu.edu.aed.implementaciones;
 
 import ucu.edu.aed.tda.TDAArbolBinarioBusqueda;
 import ucu.edu.aed.tda.TDAElemento;
+import ucu.edu.aed.tda.TDALista;
 
 public class ArbolBinarioBusqueda<T extends Comparable<T>> extends ArbolBinario<T> implements TDAArbolBinarioBusqueda<T> {
 
@@ -74,5 +75,45 @@ public class ArbolBinarioBusqueda<T extends Comparable<T>> extends ArbolBinario<
             return null;
         }
         return raiz.claveMenor();
+    }
+
+    @Override
+    public T claveMayor(){
+        if (raiz == null){
+            return null;
+        }
+        return raiz.claveMayor();
+    }
+
+    @Override
+    public T claveAnterior(Comparable<T> clave){
+        if (raiz == null){
+            return null;
+        }
+        return raiz.claveAnterior(clave);
+    }
+
+    @Override
+    public int cantidadNodosEnNivel(int nivel){
+        if (raiz == null || nivel < 0){
+            return 0;
+        }
+        return raiz.cantidadNodosEnNivel(nivel);
+    }
+
+    @Override
+    public TDALista<String> hojasConNivel(){
+        if (raiz == null){
+            return new ListaEnlazada<>();
+        }
+        return raiz.hojasConNivel(0);
+    }
+
+    @Override
+    public boolean esArbolDeBusqueda(){
+        if (raiz == null){
+            return true;
+        }
+        return raiz.esArbolDeBusqueda(null, null);
     }
 }

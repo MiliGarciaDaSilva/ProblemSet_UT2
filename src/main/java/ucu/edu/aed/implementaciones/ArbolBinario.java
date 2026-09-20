@@ -208,49 +208,28 @@ public class ArbolBinario<T extends Comparable<T>> implements TDAArbolBinario<T>
         return -1;
     }
     
-    // devuleve clave menor del árbol
     public T claveMenor(){
-        if (raiz == null){
-            return null;
-        }
-        return raiz.claveMenor();
+        return null;
     }
 
-    // devuelve clave mayor del árbol
     public T claveMayor(){
-        if (raiz == null) {
-            return null;
-        }
-        return raiz.claveMayor();
+        return null;
     }
 
-    // devuelve clave anterior a la ingredaden orden lexicográfico, si no tiene clave anterior devuelve null
-    public T claveAnterior(Comparable<T> clave) {
-        if (raiz == null) {
-            return null;
-        }
-        return raiz.claveAnterior(clave);
+    public T claveAnterior(Comparable<T> clave){
+        return null;
     }
 
     public int cantidadNodosEnNivel(int nivel){
-        if (raiz == null || nivel < 0){
-            return 0;
-        }
-        return raiz.cantidadNodosEnNivel(nivel);
+        return 0;
     }
 
     public TDALista<String> hojasConNivel(){
-        if (raiz == null){
-            return new ListaEnlazada<>();
-        }
-        return raiz.hojasConNivel(0);
+        return new ListaEnlazada<>();
     }
 
     public boolean esArbolDeBusqueda(){
-        if (raiz == null){
-            return true;
-        }
-        return raiz.esArbolDeBusqueda(null, null);
+        return false;
     }
 
     @Override
