@@ -123,9 +123,25 @@ public interface TDAElemento <T>{
     int insertarContando(T nuevoDato);
 
     /*
-     Devuelve la menor clave del subárbol que tiene como raíz este nodo.
+     Devuelve la menor clave del subárbol que tiene como raíz este nodo
     */
     T claveMenor();
+
+    // devuelve la mayor clave del subárbol que tiene como raíz este nodo
+    T claveMayor();
+
+    // devuelve la clave anterior en orden lexicográfico, si el nodo no tiene clave anterior devuelve null
+    T claveAnterior(Comparable<T> clave);
+
+    // retorna la cantidad de nodos que se encuentran en el nivel dado (relativo a este nodo)
+    int cantidadNodosEnNivel(int nivel);
+
+    // retorna una lista con cada hoja del subárbol, indicando su nivel (relativo a este nodo)
+    TDALista<String> hojasConNivel(int nivelActual);
+
+    // retorna true si el subárbol cumple la propiedad de árbol de búsqueda
+    boolean esArbolDeBusqueda(T minPermitido, T maxPermitido);
+
     TDALista<T> completos();
 
     TDALista<T> enNivel(int nivel);
