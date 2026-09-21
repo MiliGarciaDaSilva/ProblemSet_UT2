@@ -1,0 +1,34 @@
+package ucu.edu.aed.ejercicio9;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+
+        String rutaClaves = "src/main/java/ucu/edu/aed/ejercicio9/clavesPrueba.txt";
+        String rutaSalida = "src/main/java/ucu/edu/aed/ejercicio9/recorridos.txt";
+
+        GestorClaves gestor = new GestorClaves();
+        gestor.cargarClaves(rutaClaves);
+
+        System.out.println("--- Recorridos (Parte 2) ---");
+        System.out.println("Preorden: " + gestor.obtenerPreorden());
+        System.out.println("Inorden: " + gestor.obtenerInorden());
+        System.out.println("Postorden: " + gestor.obtenerPostorden());
+
+        gestor.guardarRecorridos(rutaSalida);
+
+        // Parte 3: búsquedas puntuales
+        int[] clavesABuscar = {10635, 4567, 12, 8978};
+        System.out.println("\n--- Búsquedas (Parte 3) ---");
+        for (int clave : clavesABuscar) {
+            boolean existe = gestor.buscarClave(clave);
+            System.out.println("Clave " + clave + ": " + (existe ? "encontrada" : "no encontrada"));
+        }
+
+        // Décima clave del preorden
+        String[] preordenArray = gestor.obtenerPreorden().split(" ");
+        if (preordenArray.length >= 10) {
+            System.out.println("\nDécima clave en preorden: " + preordenArray[9]);
+        }
+    }
+}
